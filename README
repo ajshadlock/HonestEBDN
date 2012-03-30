@@ -1,0 +1,62 @@
+HonestEBDN V .01
+
+
+Purpose: To monitor a thread on a certain website for any changes or deletions to a given thread.
+
+Concept: The entire program will consist of three different parts: 
+1. Webserver
+2. Database
+3. ThreadMon
+
+Webserver
+----------------------
+
+Will be front end and will be used to show the threads using php or something like that. 
+Will be able to add threads to monitor.
+To be created later.
+
+Database
+----------------------
+
+The database consists of only one table (soon more) at this point but could be split into different tables if needed. Proposed table names are as follows.
+
+key(num) --- threadId(num) --- parentId(num) --- modthreadId(num) --- title(string) --- epochTime(long) --- content(string) --- hashContent(string) --- userName(string) --- totalPosts(string)
+
+key = primary key
+threadId = the ID of the thread has been provided by the website
+parentId = the ID of the parent thread. If this is the head of a thread this will be 0.
+modthreadId = if this thread is a modified thread this id is the modified thread's id.
+title = the title of the thread.
+epochTime = time converted to epoch time. Why? easier to sort threads later
+content = content of thread
+hashContent = hash of content used to see if the content has changed at all
+username = username of poster
+totalPosts = self explained.
+
+*Need to add list of threads to monitor
+
+ThreadMon
+-------------------------
+
+The main gonads of the project. Written in java this will be a multi thread program where each thread monitors a given thread until the
+thread becomes inactive. (ie: no more posts)
+
+Basically this is the way each ThreadMon will work.
+
+1. Download the needed html from the given threadId provided by user.
+2. See if there is anothter page for said thread. if so get that html too.
+3. parse out all the extra HTML that is not needed.
+4. Seperate the needed thread information into a useable data structure (at this time called MessageThread)
+5. Compare each of the messageThread to the database. 
+	If the threadId does not exist in the database add the needed infomation to the thread.
+	If the theardId exists, check the conentHash to the one database.
+	If the contentHash matches do nothing.
+	If the contentHash not not match add new entry to database using the threadID as the modthreadID
+6. If the ThreadMon has none of the threads have been changed or none have been added in a specified amount of time close ThreadMon
+
+
+TO DO
+-------
+Steps 5 and 6 need to be created.
+Needs main controller class.
+
