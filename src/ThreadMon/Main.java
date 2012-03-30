@@ -30,12 +30,9 @@ public class Main {
     public static void main(String[] args) throws ParseException {
 
         HtmlReader hr = new HtmlReader("http://www.ebrandon.ca/messagethread.aspx?message_id=605589&cat_id=325");
+        
         ArrayList html = hr.readHtml();
-
-        //for(int x=0;x<html.size();x++){
-        //   System.out.println(html.get(x)); 
-        // }
-
+      
         HtmlFilter filter = new HtmlFilter(html, true);
 
         String rawString = filter.filterCrapOut();

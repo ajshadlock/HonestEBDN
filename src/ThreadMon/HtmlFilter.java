@@ -56,13 +56,13 @@ public class HtmlFilter {
         ArrayList<String> rawArray = new ArrayList();
         ArrayList<Message> listOMessages = new ArrayList();
         MessageThread finalArray = new MessageThread();
-        String userId ="";
-        String userName ="";
-        String content ="";
-        String parentId ="";
-        String messageId ="";
-        String totalPosts ="";
-        String title ="";
+        String userId = "error";
+        String userName = "error";
+        String content = "error";
+        String parentId = "error";
+        String threadId = "error";
+        String totalPosts = "error";
+        String title = "error";
         long epochTime = 0;
 
         //Revomes the intial crap out of the downloaded page. Also adds a hard break to the end of each >
@@ -160,9 +160,9 @@ public class HtmlFilter {
                         System.out.println("Title:" + title);
                     }
 
-                    messageId = rawArray.get(y + 2).substring(rawArray.get(y + 2).indexOf("message_id=") + 11, rawArray.get(y + 2).indexOf("&message_top"));
+                    threadId = rawArray.get(y + 2).substring(rawArray.get(y + 2).indexOf("message_id=") + 11, rawArray.get(y + 2).indexOf("&message_top"));
                     if (debug) {
-                        System.out.println("messageId:" + messageId);
+                        System.out.println("messageId:" + threadId);
                     }
 
                     parentId = rawArray.get(y + 2).substring(rawArray.get(y + 2).indexOf("message_top_parent_id=") + 22, rawArray.get(y + 2).indexOf("&message_level"));
@@ -186,7 +186,7 @@ public class HtmlFilter {
 
             }
 
-            Message tempMessage = new Message(userName, title, content, parentId, messageId, "0", epochTime);
+            Message tempMessage = new Message(threadId,parentId,title,epochTime,content,userName,totalPosts);
             finalArray.add(tempMessage);
         }
 
